@@ -1,51 +1,56 @@
 import React, { useState } from 'react';
 
 const ImageDemo = () => {
-    // State quản lý ảnh, model, trạng thái loading và kết quả
     const [imageSrc, setImageSrc] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
     const [selectedModel, setSelectedModel] = useState('resnet');
     const [isClassifying, setIsClassifying] = useState(false);
     const [results, setResults] = useState(null);
 
-    // Xử lý khi người dùng upload ảnh
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setImageSrc(imageUrl);
-            setResults(null); // Reset kết quả cũ
+            setResults(null);
+            setImageFile(file); 
         }
     };
 
-    // Hàm giả lập gọi API phân loại ảnh
-    const handleClassify = () => {
-        if (!imageSrc) return;
+    const handleClassify = async () => {
+        if (!imageFile) return;
         
         setIsClassifying(true);
         setResults(null);
 
-        // Giả lập thời gian model inference (2 giây)
-        // SAU NÀY BẠN SẼ THAY ĐOẠN NÀY BẰNG AXIOS HOẶC FETCH ĐỂ GỌI FASTAPI/FLASK BACKEND
-        setTimeout(() => {
-            setIsClassifying(false);
-            
-            // Mock data trả về tùy theo model được chọn
-            if (selectedModel === 'resnet') {
-                setResults([
-                    { label: 'Golden Retriever (Chó săn vàng)', score: 92.5 },
-                    { label: 'Labrador Retriever', score: 5.2 },
-                    { label: 'Cocker Spaniel', score: 1.8 },
-                    { label: 'Beagle', score: 0.5 },
-                ]);
-            } else {
-                setResults([
-                    { label: 'Golden Retriever (Chó săn vàng)', score: 98.1 },
-                    { label: 'Labrador Retriever', score: 1.1 },
-                    { label: 'Kuvasz', score: 0.6 },
-                    { label: 'Great Pyrenees', score: 0.2 },
-                ]);
+        // Tạo gói dữ liệu (FormData) chứa ảnh và tên model
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        formData.append('model_type', selectedModel); // Gửi 'resnet' hoặc 'vit'
+
+        try {
+            const response = await fetch('https://minhduongts13-dl.hf.space/predict', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error(`Lỗi kết nối: ${response.status}`);
             }
-        }, 2000);
+
+            const data = await response.json();
+
+            if (data.success) {
+                setResults(data.predictions); 
+            } else {
+                alert("Server báo lỗi: Không thể dự đoán ảnh này.");
+            }
+        } catch (error) {
+            console.error("Lỗi khi gọi API:", error);
+            alert("Không thể kết nối đến Backend Server. Hãy đảm bảo Server đang chạy!");
+        } finally {
+            setIsClassifying(false);
+        }
     };
 
     return (
@@ -197,7 +202,7 @@ const ImageDemo = () => {
             </div>
 
             {/* Thêm CSS cho hiệu ứng quét ảnh (Scan line) */}
-            <style jsx>{`
+            <style>{`
                 @keyframes scan {
                     0% { transform: translateY(-100%); }
                     100% { transform: translateY(200%); }
