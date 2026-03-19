@@ -1,5 +1,5 @@
 import React from 'react';
-import hcmutLogo from '../assets/hcmut.png';
+import hcmutLogo from '../../assets/hcmut.png';
 
 export default function Hero() {
   return (

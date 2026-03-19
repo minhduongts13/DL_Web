@@ -1,5 +1,6 @@
 import React from 'react';
-import ass1 from '../assets/classification.jpg';
+import ass1 from '../../assets/classification.jpg';
+import { useNavigate } from 'react-router-dom';
 const projects = [
   { 
     title: 'Assignment 1', 
@@ -7,7 +8,8 @@ const projects = [
     imgSrc: ass1,
     bgColor: 'bg-[#FCF4FF]', 
     hoverBorder: 'hover:border-[#DD2476]',
-    hoverText: 'group-hover:text-[#DD2476]'
+    hoverText: 'group-hover:text-[#DD2476]',
+    path: '/assignment1'
   },
   { 
     title: 'Assignment 2', 
@@ -15,7 +17,8 @@ const projects = [
     imgSrc: '/assets/image2.jpg', 
     bgColor: 'bg-[#FEFAF0]', 
     hoverBorder: 'hover:border-[#f3a953]',
-    hoverText: 'group-hover:text-[#f3a953]'
+    hoverText: 'group-hover:text-[#f3a953]',
+    path: '/assignment2'
   },
   { 
     title: 'Assignment 3', 
@@ -23,11 +26,13 @@ const projects = [
     imgSrc: '/assets/image3.jpg', 
     bgColor: 'bg-[#EEF5FA]', 
     hoverBorder: 'hover:border-[#528af0]',
-    hoverText: 'group-hover:text-[#528af0]'
+    hoverText: 'group-hover:text-[#528af0]',
+    path: '/assignment3'
   },
 ];
 
 export default function Projects() {
+  const navigate = useNavigate();
   return (
     <section id="projects" className="py-12">
       <div className="max-w-4xl mx-auto">
@@ -36,6 +41,7 @@ export default function Projects() {
           {projects.map((p) => (
             <article 
               key={p.title} 
+              onClick={() => p.path && navigate(p.path)}
               // Thêm class 'group' để bắt sự kiện hover cho các phần tử con bên trong
               className={`p-5 rounded-[20px] ${p.bgColor} border border-transparent ${p.hoverBorder} hover:shadow-md transition-all duration-300 cursor-pointer group flex flex-col`}
             >

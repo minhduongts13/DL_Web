@@ -1,22 +1,28 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Assignment1 from './pages/Assignment1';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import About from './components/About';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
 
-export default function App() {
+const App = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1 container mx-auto px-6">
-        <Hero />
-        <About />
-        <Projects />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter basename="/DL_Web">
+      <div className="min-h-screen bg-[#E0E8F6] font-sans text-slate-800 flex flex-col overflow-x-hidden">
+        <Header />
+
+        <main className="flex-grow w-full">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/assignment1" element={<Assignment1 />} />
+          </Routes>
+        </main>
+
+        <Footer />
+        
+      </div>
+    </BrowserRouter>
   );
-}
+};
+
+export default App;
