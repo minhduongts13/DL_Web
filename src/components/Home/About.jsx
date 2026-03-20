@@ -30,9 +30,6 @@ export default function About() {
               <div>
                 <div className="text-sky-700 font-semibold">Trần Dương Quốc Anh</div>
                 <div className="text-sm text-slate-500">StudentID: 2210134</div>
-                <div className="mt-2">
-                  <span className="inline-block text-xs px-2 py-1 bg-sky-50 text-sky-600 rounded-full">Front-end</span>
-                </div>
               </div>
             </article>
 
@@ -43,9 +40,6 @@ export default function About() {
               <div>
                 <div className="text-rose-700 font-semibold">Dương Quang Minh</div>
                 <div className="text-sm text-slate-500">StudentID: 2212021</div>
-                <div className="mt-2">
-                  <span className="inline-block text-xs px-2 py-1 bg-rose-50 text-rose-600 rounded-full">ML Research</span>
-                </div>
               </div>
             </article>
           </div>

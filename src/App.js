@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Assignment1 from './pages/Assignment1';
 import Header from './components/Header';
@@ -7,7 +7,7 @@ import Footer from './components/Footer';
 
 const App = () => {
   return (
-    <BrowserRouter basename="/DL_Web">
+    <HashRouter>
       <div className="min-h-screen bg-[#E0E8F6] font-sans text-slate-800 flex flex-col overflow-x-hidden">
         <Header />
 
@@ -21,7 +21,7 @@ const App = () => {
         <Footer />
         
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
