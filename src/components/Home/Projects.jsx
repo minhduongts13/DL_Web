@@ -1,9 +1,11 @@
 import React from 'react';
-import ass1 from '../../assets/classification.jpg';
+import ass1 from '../../assets/assignment1.jpg';
+import ass2 from '../../assets/assignment2.png';
+import ass3 from '../../assets/assignment3.jpg';
 import { useNavigate } from 'react-router-dom';
 const projects = [
   { 
-    title: 'Assignment 1', 
+    title: 'Bài tập lớn 1', 
     subtitle: 'Classification', 
     imgSrc: ass1,
     bgColor: 'bg-[#FCF4FF]', 
@@ -12,18 +14,18 @@ const projects = [
     path: '/assignment1'
   },
   { 
-    title: 'Assignment 2', 
-    subtitle: 'Web Design / Usability Testing', 
-    imgSrc: '/assets/image2.jpg', 
+    title: 'Bài tập lớn 2', 
+    subtitle: 'Chưa xác định', 
+    imgSrc: ass2, 
     bgColor: 'bg-[#FEFAF0]', 
     hoverBorder: 'hover:border-[#f3a953]',
     hoverText: 'group-hover:text-[#f3a953]',
     path: '/assignment2'
   },
   { 
-    title: 'Assignment 3', 
-    subtitle: 'Web Design / Usability Testing', 
-    imgSrc: '/assets/image3.jpg', 
+    title: 'Bài tập lớn 3', 
+    subtitle: 'Chưa xác định', 
+    imgSrc: ass3, 
     bgColor: 'bg-[#EEF5FA]', 
     hoverBorder: 'hover:border-[#528af0]',
     hoverText: 'group-hover:text-[#528af0]',
@@ -36,7 +38,7 @@ export default function Projects() {
   return (
     <section id="projects" className="py-12">
       <div className="max-w-4xl mx-auto">
-        <h3 className="text-4xl font-bold mb-6 text-[#484E53] text-center">Projects</h3>
+        <h3 className="text-4xl font-bold mb-6 text-[#484E53] text-center">Danh sách Bài tập lớn</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {projects.map((p) => (
             <article 

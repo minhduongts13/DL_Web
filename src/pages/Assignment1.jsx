@@ -1,17 +1,14 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import Hero from '../components/Assignment1/Hero';
 import Deliverables from '../components/Assignment1/Deliverables';
-import ImageDemo from '../components/Assignment1/ImageDemo';
+import A1ProjectOverview from '../components/Assignment1/Introduction';
 
 const Assignment1 = () => {
-    const navigate = useNavigate();
-
     return (
-        <div className="animate-fade-in mx-auto">
+        <div className="animate-fade-in mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl pb-16">
             <Hero />
             <Deliverables />
-            <ImageDemo />
+            <A1ProjectOverview />
         </div>
     );
 };

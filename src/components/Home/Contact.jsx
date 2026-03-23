@@ -36,11 +36,11 @@ export default function ContactForm() {
   return (
     <section id="contact" className="py-12">
       <div className="max-w-4xl mx-auto">
-        <h3 className="text-4xl font-bold leading-tight text-[#484E53] text-center mb-4">Get In Touch</h3>
+        <h3 className="text-4xl font-bold leading-tight text-[#484E53] text-center mb-4">Liên hệ</h3>
 
         <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="col-span-1">
-            <label className="block text-sm mb-1">Name</label>
+            <label className="block text-sm mb-1">Tên</label>
             <input 
               name="name" // BẮT BUỘC PHẢI CÓ
               required 
@@ -61,7 +61,7 @@ export default function ContactForm() {
           </div>
 
           <div className="col-span-1 sm:col-span-2">
-            <label className="block text-sm mb-1">Message</label>
+            <label className="block text-sm mb-1">Lời nhắn</label>
             <textarea 
               name="message" // BẮT BUỘC PHẢI CÓ
               required
@@ -76,15 +76,15 @@ export default function ContactForm() {
               disabled={status === 'loading'}
               className="bg-sky-500 hover:bg-sky-600 disabled:bg-sky-300 text-white rounded px-6 py-2 transition-colors"
             >
-              {status === 'loading' ? 'Sending...' : 'Get in Touch'}
+              {status === 'loading' ? 'Đang gửi...' : 'Gửi'}
             </button>
             
             {status === 'success' && (
-              <span className="text-green-600 font-medium">Message sent successfully!</span>
+              <span className="text-green-600 font-medium">Gửi thành công!</span>
             )}
             
             {status === 'error' && (
-              <span className="text-red-600 font-medium">Network error or blocked. Please try again.</span>
+              <span className="text-red-600 font-medium">Lỗi mạng hoặc bị chặn. Vui lòng thử lại.</span>
             )}
           </div>
         </form>
