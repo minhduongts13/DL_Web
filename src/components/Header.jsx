@@ -36,7 +36,14 @@ export default function Header() {
   return (
     <header className="py-6">
       <div className="container mx-auto flex items-center justify-between px-6">
-        <div className="text-2xl font-semibold text-slate-800">Georgy</div>
+        <div className="text-2xl font-semibold text-slate-800">
+          <a
+            href={'#home'}
+            onClick={(e) => handleNavClick(e, 'home')}
+          >
+            ABC1
+          </a>
+        </div>
         <nav>
           <ul className="flex space-x-6 text-sm font-medium">
             {navItems.map((n) => (
