@@ -1,20 +1,26 @@
 {
   "files": {
     "main.css": "/DL_Web/static/css/main.83ae689a.css",
-    "main.js": "/DL_Web/static/js/main.965b3464.js",
+    "main.js": "/DL_Web/static/js/main.9a64ad89.js",
     "static/js/453.cdaac852.chunk.js": "/DL_Web/static/js/453.cdaac852.chunk.js",
     "static/media/hcmut.png": "/DL_Web/static/media/hcmut.f926e3b1de877e603e5e.png",
     "static/media/assignment2.png": "/DL_Web/static/media/assignment2.d57072bdd3df8e70394c.png",
     "static/media/assignment3.jpg": "/DL_Web/static/media/assignment3.cd046b6d49ea44cf89be.jpg",
     "static/media/assignment1.jpg": "/DL_Web/static/media/assignment1.82479dc78b2e514b3477.jpg",
     "static/media/dataset.png": "/DL_Web/static/media/dataset.bd4d88b392b25a5c0bf3.png",
+    "static/media/confusion_matrix_lstm.png": "/DL_Web/static/media/confusion_matrix_lstm.c705065bfc7637c22451.png",
+    "static/media/confusion_matrix_distillbert.png": "/DL_Web/static/media/confusion_matrix_distillbert.d74e176c362d5aed4e31.png",
+    "static/media/classification_report_distillbert.png": "/DL_Web/static/media/classification_report_distillbert.40932071c8a75216cf52.png",
+    "static/media/classification_report_lstm.png": "/DL_Web/static/media/classification_report_lstm.5bdfc5d335061f5080d9.png",
+    "static/media/text_frequency_label.png": "/DL_Web/static/media/text_frequency_label.eefc5b40598ebf98153e.png",
+    "static/media/text_sentences_length.png": "/DL_Web/static/media/text_sentences_length.54d10483f7d2910de3f1.png",
     "index.html": "/DL_Web/index.html",
     "main.83ae689a.css.map": "/DL_Web/static/css/main.83ae689a.css.map",
-    "main.965b3464.js.map": "/DL_Web/static/js/main.965b3464.js.map",
+    "main.9a64ad89.js.map": "/DL_Web/static/js/main.9a64ad89.js.map",
     "453.cdaac852.chunk.js.map": "/DL_Web/static/js/453.cdaac852.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.83ae689a.css",
-    "static/js/main.965b3464.js"
+    "static/js/main.9a64ad89.js"
   ]
 }
