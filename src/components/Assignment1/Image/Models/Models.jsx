@@ -1,4 +1,5 @@
 import React from 'react';
+import Pipeline from './Pipeline';
 
 const Models = () => {
     return (
@@ -16,6 +17,7 @@ const Models = () => {
             </div>
 
             <div className="space-y-8">
+                <Pipeline />
                 {/* Mục 1: Các Mô hình */}
                 <div>
                     <h4 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
@@ -51,7 +53,6 @@ const Models = () => {
                             <div className="text-sm text-slate-600"><strong>Full Fine-tuning:</strong> Mở khóa và cập nhật trọng số cho toàn bộ kiến trúc mạng với Learning Rate nhỏ.</div>
                         </div>
                         <div className="bg-white p-4 rounded-xl shadow-sm border border-indigo-200 relative overflow-hidden">
-                            <div className="absolute top-0 right-0 bg-indigo-100 text-indigo-700 text-[10px] font-bold px-2 py-1 rounded-bl-lg">TỐI ƯU NHẤT</div>
                             <div className="font-bold text-slate-800 mb-1">Scenario 3 (S3)</div>
                             <div className="text-sm text-slate-600"><strong>Layer-wise Learning Rate Decay (LLRD):</strong> Giảm dần tốc độ học từ lớp phân loại ngược về các lớp trích xuất đặc trưng cơ sở.</div>
                         </div>
@@ -71,10 +72,12 @@ const Models = () => {
                         </li>
                         <li className="flex items-start gap-2">
                             <span className="text-slate-400 mt-0.5">✔</span>
-                            <p><strong>Cơ chế tối ưu Training:</strong> Nhóm xây dựng hàm huấn luyện tự động tích hợp <strong>Early Stopping</strong> (tránh Overfitting với patience=5) và <strong>Automatic Mixed Precision (AMP - GradScaler)</strong> giúp tăng tốc độ huấn luyện trên GPU mà không giảm độ chính xác.</p>
+                            <p><strong>Cơ chế tối ưu Training:</strong> Nhóm xây dựng hàm huấn luyện tự động tích hợp <strong>Early Stopping</strong> (tránh Overfitting) và <strong>Automatic Mixed Precision (AMP - GradScaler)</strong> giúp tăng tốc độ huấn luyện trên GPU mà không giảm độ chính xác.</p>
                         </li>
                     </ul>
                 </div>
+
+                
             </div>
         </div>
     );

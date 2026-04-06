@@ -1,0 +1,182 @@
+[
+  {
+    "trueLabel": "buildings",
+    "predictedLabel": "buildings",
+    "value": 404
+  },
+  {
+    "trueLabel": "buildings",
+    "predictedLabel": "forest",
+    "value": 1
+  },
+  {
+    "trueLabel": "buildings",
+    "predictedLabel": "glacier",
+    "value": 0
+  },
+  {
+    "trueLabel": "buildings",
+    "predictedLabel": "mountain",
+    "value": 2
+  },
+  {
+    "trueLabel": "buildings",
+    "predictedLabel": "sea",
+    "value": 3
+  },
+  {
+    "trueLabel": "buildings",
+    "predictedLabel": "street",
+    "value": 27
+  },
+  {
+    "trueLabel": "forest",
+    "predictedLabel": "buildings",
+    "value": 0
+  },
+  {
+    "trueLabel": "forest",
+    "predictedLabel": "forest",
+    "value": 474
+  },
+  {
+    "trueLabel": "forest",
+    "predictedLabel": "glacier",
+    "value": 0
+  },
+  {
+    "trueLabel": "forest",
+    "predictedLabel": "mountain",
+    "value": 0
+  },
+  {
+    "trueLabel": "forest",
+    "predictedLabel": "sea",
+    "value": 0
+  },
+  {
+    "trueLabel": "forest",
+    "predictedLabel": "street",
+    "value": 0
+  },
+  {
+    "trueLabel": "glacier",
+    "predictedLabel": "buildings",
+    "value": 4
+  },
+  {
+    "trueLabel": "glacier",
+    "predictedLabel": "forest",
+    "value": 1
+  },
+  {
+    "trueLabel": "glacier",
+    "predictedLabel": "glacier",
+    "value": 484
+  },
+  {
+    "trueLabel": "glacier",
+    "predictedLabel": "mountain",
+    "value": 42
+  },
+  {
+    "trueLabel": "glacier",
+    "predictedLabel": "sea",
+    "value": 21
+  },
+  {
+    "trueLabel": "glacier",
+    "predictedLabel": "street",
+    "value": 1
+  },
+  {
+    "trueLabel": "mountain",
+    "predictedLabel": "buildings",
+    "value": 0
+  },
+  {
+    "trueLabel": "mountain",
+    "predictedLabel": "forest",
+    "value": 2
+  },
+  {
+    "trueLabel": "mountain",
+    "predictedLabel": "glacier",
+    "value": 42
+  },
+  {
+    "trueLabel": "mountain",
+    "predictedLabel": "mountain",
+    "value": 470
+  },
+  {
+    "trueLabel": "mountain",
+    "predictedLabel": "sea",
+    "value": 10
+  },
+  {
+    "trueLabel": "mountain",
+    "predictedLabel": "street",
+    "value": 1
+  },
+  {
+    "trueLabel": "sea",
+    "predictedLabel": "buildings",
+    "value": 2
+  },
+  {
+    "trueLabel": "sea",
+    "predictedLabel": "forest",
+    "value": 1
+  },
+  {
+    "trueLabel": "sea",
+    "predictedLabel": "glacier",
+    "value": 0
+  },
+  {
+    "trueLabel": "sea",
+    "predictedLabel": "mountain",
+    "value": 5
+  },
+  {
+    "trueLabel": "sea",
+    "predictedLabel": "sea",
+    "value": 502
+  },
+  {
+    "trueLabel": "sea",
+    "predictedLabel": "street",
+    "value": 0
+  },
+  {
+    "trueLabel": "street",
+    "predictedLabel": "buildings",
+    "value": 20
+  },
+  {
+    "trueLabel": "street",
+    "predictedLabel": "forest",
+    "value": 4
+  },
+  {
+    "trueLabel": "street",
+    "predictedLabel": "glacier",
+    "value": 0
+  },
+  {
+    "trueLabel": "street",
+    "predictedLabel": "mountain",
+    "value": 0
+  },
+  {
+    "trueLabel": "street",
+    "predictedLabel": "sea",
+    "value": 2
+  },
+  {
+    "trueLabel": "street",
+    "predictedLabel": "street",
+    "value": 475
+  }
+]

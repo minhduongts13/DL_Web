@@ -1,5 +1,9 @@
 import React from 'react';
-import datasetImg from '../../../assets/Assignment1/image/dataset.png';
+import Overview from './Overview';
+import AdvancedCharts from './Similarity';
+import color_chart from '../../../../assets/Assignment1/image/color_distribution.png';
+import augmentation from '../../../../assets/Assignment1/image/augmentation.png';
+import UmapVisualization from './Umap';
 
 const classNames = ['Buildings', 'Forest', 'Glacier', 'Mountain', 'Sea', 'Street'];
 
@@ -41,19 +45,17 @@ const A1Dataset = () => {
             </div>
             
             {/* PHẦN DƯỚI: Khung chứa ảnh tràn viền (Full width) */}
-            <div className="flex flex-col items-center w-full">
-                {/* Ảnh được thiết lập w-full để phóng to tối đa */}
-                <img 
-                    src={datasetImg} 
-                    alt="Biểu đồ phân bố dữ liệu" 
-                    className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
-                />
-            </div>
-            <div className="mt-6 text-slate-700 text-base sm:text-lg leading-relaxed">
-                <span className="font-bold text-indigo-700 mr-2">Nhận xét:</span>
-                <strong className="font-semibold text-slate-800">Dữ liệu khá cân bằng.</strong> Số lượng ảnh giữa 6 lớp phân bố khá đồng đều trên cả tập huấn luyện và tập kiểm thử.
-            </div>
-            
+            <Overview />
+            <p className="mt-2 mb-4 text-xl text-black text-center font-bold">
+                Phân bố cường độ các kênh màu RGB theo từng nhãn dữ liệu
+            </p>
+            <img src={color_chart} alt="Color Distribution chart" />
+            <AdvancedCharts />
+            <UmapVisualization />
+            <p className="mt-2 mb-4 text-xl text-black text-center font-bold">
+                Trực quan hóa kết quả áp dụng kỹ thuật Data Augmentation trên tập dữ liệu ảnh
+            </p>
+            <img src={augmentation} alt="Augmentation visualization" />
         </div>
     );
 };
