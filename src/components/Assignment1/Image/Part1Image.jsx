@@ -1,8 +1,8 @@
 import React from 'react';
 import ImageDemo from './ImageDemo';
-import Dataset from './Dataset';
-import Model from './Models';
-import Interpretation from './Interpretation';
+import Dataset from './EDA/Dataset';
+import Model from './Models/Models';
+import Interpretation from './Evaluation/Interpretation';
 
 const Part1Image = () => {
     return (
