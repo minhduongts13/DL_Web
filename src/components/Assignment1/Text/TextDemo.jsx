@@ -48,7 +48,7 @@ const TextDemo = () => {
                     <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" className="text-[#DD2476]"><path d="M2 12h4l3-9 5 18 3-9h5"></path></svg>
                     Live Model Demonstration
                 </h3>
-                <p className="text-slate-500 mt-2">Gõ nội dung văn bản.</p>
+                <p className="text-slate-500 mt-2">Gõ nội dung văn bản (tiếng Anh).</p>
             </div>
 
             <div className="gap-8 lg:gap-12 space-y-4">
