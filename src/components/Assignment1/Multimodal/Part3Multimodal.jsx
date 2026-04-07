@@ -3,6 +3,7 @@ import Overview from './Overview';
 import Preprocessing from './Preprocessing';
 import Setup from './Setup';
 import Results from './Results';
+import ErrorAnalysis from './ErrorAnalysis';
 
 const Part3Multimodal = () => {
     return (
@@ -16,6 +17,7 @@ const Part3Multimodal = () => {
             <Preprocessing />
             <Setup />
             <Results />
+            <ErrorAnalysis />
         </section>
     );
 };

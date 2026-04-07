@@ -7,6 +7,7 @@ const chips = [
     'Image / Text / Fusion features',
     'k = 1, 4, 8, 16 shots',
     '5 independent runs',
+    'Selection by F1-macro',
 ];
 
 const Setup = () => {
@@ -25,6 +26,9 @@ const Setup = () => {
                 <div className="xl:col-span-2 space-y-5">
                     <p className="text-slate-700 leading-relaxed text-lg">
                         Notebook sử dụng <strong className="font-bold text-emerald-600">CLIP</strong> như một backbone đa phương thức để so sánh khả năng <strong>zero-shot</strong> và <strong>few-shot</strong>. Từ cùng một tập dữ liệu, pipeline lần lượt tách đặc trưng ảnh, đặc trưng text và đặc trưng fusion để kiểm tra độ lợi từ từng modality.
+                    </p>
+                    <p className="text-slate-600 leading-relaxed">
+                        Các thí nghiệm được chọn theo <strong className="font-semibold text-emerald-600">F1-macro</strong> trên validation, sau đó retest trên test set để giữ cùng một tiêu chí đánh giá giữa zero-shot và few-shot.
                     </p>
 
                     <div className="flex flex-wrap gap-3">

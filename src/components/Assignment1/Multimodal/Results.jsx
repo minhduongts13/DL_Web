@@ -1,16 +1,57 @@
 import React from 'react';
+import validationChart from './report/5.png';
+import validationTable from './report/5_2.png';
+import testChart from './report/6.png';
+import testTable from './report/6_2.png';
 
-const results = [
-    { label: 'Zero-shot baseline', accuracy: '~34.5%', f1: '~33.0%' },
-    { label: 'Image few-shot', accuracy: 'tăng mạnh theo k', f1: 'cao nhất ở k = 16' },
-    { label: 'Text few-shot', accuracy: 'thấp hơn image', f1: 'cải thiện chậm hơn' },
-    { label: 'Fusion few-shot', accuracy: 'ổn định hơn text', f1: 'tiệm cận image ở k lớn' },
+const validationRows = [
+    ['F4 Fusion enriched caption (k=16)', '0.6629', '0.5936'],
+    ['F2 Few-shot Image Probe ViT-L/14 (k=16)', '0.6105', '0.5598'],
+    ['F1 Few-shot Image Probe ViT-B/32 (k=16)', '0.5394', '0.4933'],
+    ['E2 Zero-shot ViT-L/14', '0.5074', '0.4404'],
+    ['E3 Prompt Engineering (ensemble)', '0.4676', '0.4084'],
+    ['F3 Few-shot Text Probe (real captions, k=16)', '0.3927', '0.3355'],
+    ['E1 Zero-shot ViT-B/32', '0.3918', '0.3172'],
+    ['E4 Multimodal zero-shot (class + caption)', '0.3024', '0.2609'],
 ];
 
-const findings = [
-    'Image embedding là tín hiệu mạnh nhất trong toàn bộ thiết lập few-shot.',
-    'Text-only yếu hơn rõ rệt, phản ánh việc caption mô tả thuộc tính chi tiết hơn là tên lớp.',
-    'Fusion cải thiện tính ổn định, đặc biệt khi số mẫu mỗi lớp tăng lên.',
+const testRows = [
+    ['F4 Fusion enriched caption (k=16)', '0.6612', '0.5886'],
+    ['F2 Few-shot Image Probe ViT-L/14 (k=16)', '0.6069', '0.5549'],
+    ['F1 Few-shot Image Probe ViT-B/32 (k=16)', '0.5370', '0.4903'],
+    ['E2 Zero-shot ViT-L/14', '0.4994', '0.4340'],
+    ['E3 Prompt Engineering (ensemble)', '0.4594', '0.3893'],
+    ['F3 Few-shot Text Probe (real captions, k=16)', '0.3841', '0.3289'],
+    ['E1 Zero-shot ViT-B/32', '0.3857', '0.2974'],
+    ['E4 Multimodal zero-shot (class + caption)', '0.3146', '0.2721'],
+];
+
+const summaryCards = [
+    {
+        label: 'Best validation model',
+        value: 'F4 Fusion enriched caption',
+        detail: 'k = 16, Accuracy 0.6629, F1-macro 0.5936',
+        tone: 'border-emerald-100 bg-emerald-50/60 text-emerald-700',
+    },
+    {
+        label: 'Best test model',
+        value: 'F4 Fusion enriched caption',
+        detail: 'k = 16, Accuracy 0.6612, F1-macro 0.5886',
+        tone: 'border-sky-100 bg-sky-50/60 text-sky-700',
+    },
+    {
+        label: 'Selection rule',
+        value: 'F1-macro',
+        detail: 'Validation được dùng để chọn mô hình, test chỉ để báo cáo cuối cùng.',
+        tone: 'border-amber-100 bg-amber-50/70 text-amber-700',
+    },
+];
+
+const keyFindings = [
+    'Fusion enriched caption đứng đầu cả validation lẫn test, cho thấy ảnh và caption bổ sung thông tin cho nhau tốt hơn các thiết lập đơn lẻ.',
+    'Ranking giữa các experiment rất ổn định từ validation sang test, đặc biệt ở nhóm few-shot image probe.',
+    'Multimodal zero-shot kiểu class + caption chưa hiệu quả bằng few-shot vì caption gốc còn nhiễu và không phải lúc nào cũng khớp trực tiếp với nhãn lớp.',
+    'K = 16 là điểm cân bằng tốt nhất trong notebook cho cả image, text và fusion probes.',
 ];
 
 const Results = () => {
@@ -21,32 +62,64 @@ const Results = () => {
                     <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20"></path><path d="m17 5-5-3-5 3"></path><path d="m17 19-5 3-5-3"></path></svg>
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight">
-                    Kết quả & Nhận định <span className="text-slate-400 font-medium text-xl hidden sm:inline-block ml-2">| Results</span>
+                    Huấn luyện & Đánh giá <span className="text-slate-400 font-medium text-xl hidden sm:inline-block ml-2">| Training & Evaluation</span>
                 </h3>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
-                <div className="xl:col-span-2 rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-inner">
-                    <h4 className="text-lg font-bold text-slate-800 mb-4">Xu hướng từ các đường cong few-shot</h4>
-                    <ul className="space-y-3 text-slate-700 leading-relaxed">
-                        <li className="flex items-start gap-3"><span className="mt-1 inline-block h-2.5 w-2.5 rounded-full bg-amber-400"></span><span>Accuracy tăng theo số shot, nhưng tốc độ tăng không đều giữa image, text và fusion.</span></li>
-                        <li className="flex items-start gap-3"><span className="mt-1 inline-block h-2.5 w-2.5 rounded-full bg-amber-400"></span><span>CLIP zero-shot đóng vai trò baseline khá mạnh, đặc biệt so với text-only few-shot ở shot nhỏ.</span></li>
-                        <li className="flex items-start gap-3"><span className="mt-1 inline-block h-2.5 w-2.5 rounded-full bg-amber-400"></span><span>Fusion cho thấy lợi thế rõ hơn khi k-shot tăng, vì có thêm tín hiệu ngữ nghĩa từ caption.</span></li>
-                    </ul>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                {summaryCards.map((card) => (
+                    <div key={card.label} className={`rounded-2xl border p-5 shadow-sm ${card.tone}`}>
+                        <div className="text-xs font-bold uppercase tracking-wider opacity-80 mb-2">{card.label}</div>
+                        <div className="text-2xl font-extrabold leading-tight text-slate-800">{card.value}</div>
+                        <p className="text-sm text-slate-600 leading-relaxed mt-3">{card.detail}</p>
+                    </div>
+                ))}
+            </div>
+
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+                    <div className="flex items-center justify-between gap-3 mb-4">
+                        <h4 className="text-lg font-bold text-slate-800">Validation set</h4>
+                        <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">Selection metric: F1-macro</span>
+                    </div>
+                    <figure className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm mb-4">
+                        <figcaption className="mb-3 text-center text-base font-bold text-slate-800">Section 5 - F1-macro Comparison</figcaption>
+                        <img src={validationChart} alt="Validation F1-macro comparison chart" className="w-full rounded-xl" />
+                    </figure>
+                    <figure className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                        <figcaption className="mb-3 text-center text-base font-bold text-slate-800">Validation summary table</figcaption>
+                        <img src={validationTable} alt="Validation summary table" className="w-full rounded-xl" />
+                    </figure>
                 </div>
 
-                <div className="rounded-2xl border border-amber-100 bg-amber-50/60 p-5 flex flex-col justify-center">
-                    <div className="text-center space-y-2">
-                        <div className="text-5xl font-extrabold text-amber-600 leading-none">k</div>
-                        <div className="text-xs font-bold uppercase tracking-wider text-slate-600">Shots per class</div>
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+                    <div className="flex items-center justify-between gap-3 mb-4">
+                        <h4 className="text-lg font-bold text-slate-800">Test set</h4>
+                        <span className="text-xs font-bold uppercase tracking-wider text-sky-600">Final report only</span>
                     </div>
-                    <p className="text-sm text-slate-600 text-center leading-relaxed mt-4">
-                        Notebook đánh giá tại các mức k = 1, 4, 8, 16 để xem mô hình cải thiện như thế nào khi số lượng mẫu gắn nhãn tăng dần.
-                    </p>
+                    <figure className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm mb-4">
+                        <figcaption className="mb-3 text-center text-base font-bold text-slate-800">Section 6 - F1-macro Comparison</figcaption>
+                        <img src={testChart} alt="Test F1-macro comparison chart" className="w-full rounded-xl" />
+                    </figure>
+                    <figure className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                        <figcaption className="mb-3 text-center text-base font-bold text-slate-800">Test summary table</figcaption>
+                        <img src={testTable} alt="Test summary table" className="w-full rounded-xl" />
+                    </figure>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="rounded-2xl border border-amber-100 bg-amber-50/60 p-5 shadow-sm">
+                    <h4 className="text-lg font-bold text-slate-800 mb-4">What the notebook shows</h4>
+                    <div className="space-y-3">
+                        {keyFindings.map((item) => (
+                            <div key={item} className="rounded-xl border border-amber-100 bg-white p-4">
+                                <p className="text-sm text-slate-700 leading-relaxed">{item}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
                 <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                     <h4 className="text-lg font-bold text-slate-800 mb-4">Tóm tắt định lượng</h4>
                     <div className="overflow-hidden rounded-xl border border-slate-200">
@@ -59,27 +132,26 @@ const Results = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
-                                {results.map((row) => (
-                                    <tr key={row.label} className="bg-white">
-                                        <td className="px-4 py-3 font-medium text-slate-800">{row.label}</td>
-                                        <td className="px-4 py-3 text-slate-600">{row.accuracy}</td>
-                                        <td className="px-4 py-3 text-slate-600">{row.f1}</td>
+                                {validationRows.slice(0, 4).map((row) => (
+                                    <tr key={row[0]} className="bg-white">
+                                        <td className="px-4 py-3 font-medium text-slate-800">{row[0]}</td>
+                                        <td className="px-4 py-3 text-slate-600">{row[1]}</td>
+                                        <td className="px-4 py-3 text-slate-600">{row[2]}</td>
+                                    </tr>
+                                ))}
+                                {testRows.slice(0, 4).map((row) => (
+                                    <tr key={row[0]} className="bg-slate-50/50">
+                                        <td className="px-4 py-3 font-medium text-slate-800">{row[0]}</td>
+                                        <td className="px-4 py-3 text-slate-600">{row[1]}</td>
+                                        <td className="px-4 py-3 text-slate-600">{row[2]}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                </div>
-
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
-                    <h4 className="text-lg font-bold text-slate-800 mb-4">Điểm rút ra</h4>
-                    <div className="space-y-3">
-                        {findings.map((item) => (
-                            <div key={item} className="rounded-xl border border-slate-200 bg-white p-4">
-                                <p className="text-sm text-slate-700 leading-relaxed">{item}</p>
-                            </div>
-                        ))}
-                    </div>
+                    <p className="text-sm text-slate-600 leading-relaxed mt-4">
+                        Bảng đầy đủ trong notebook cho thấy F4 luôn đứng đầu, còn E4 multimodal zero-shot thấp nhất. Thứ hạng giữa validation và test gần như không đổi, nên lựa chọn mô hình khá ổn định.
+                    </p>
                 </div>
             </div>
         </div>
