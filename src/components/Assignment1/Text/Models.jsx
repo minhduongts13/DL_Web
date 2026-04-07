@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const Models = () => {
     return (
         <div className="bg-white rounded-[2rem] p-8 sm:p-10 shadow-sm border border-slate-100 mt-8 animate-fade-in">
@@ -25,30 +26,51 @@ const Models = () => {
                     <ul className="space-y-3 text-slate-700 ml-3">
                         <li className="flex items-start gap-2">
                             <span className="text-red-500 mt-1">●</span>
-                            <p><strong>LSTM (Long-Short Term Memory):</strong> Mô hình cải tiến từ RNN (Recurrent Neural Network), có khả năng học được các mối quan hệ giữa các từ cách xa nhau và giải quyết vấn đề về vanishing hay exploding gradient có ở RNN. Đồng thời, mô hình được thiết để lấy dữ liệu từ hai chiều để thu được toàn bộ bối cảnh văn bản.</p>
+                            <p><strong>Bi-LSTM (Bidirectional Long-Short Term Memory):</strong> Mô hình cải tiến từ RNN (Recurrent Neural Network), có khả năng học được các mối quan hệ giữa các từ cách xa nhau và giải quyết vấn đề về vanishing hay exploding gradient có ở RNN. Đồng thời, mô hình được thiết để lấy dữ liệu từ hai chiều để thu được toàn bộ bối cảnh văn bản.</p>
                         </li>
+
                         <li className="flex items-start gap-2">
                             <span className="text-sky-500 mt-1">●</span>
-                            <p><strong>DistilBERT (base-uncased):</strong> Một mô hình sử dụng kiến trúc transformer, được chắt lọc (distill) từ mô hình BERT gốc giúp nó trở nên nhỏ hơn, và nhanh hơn so với mô hình gốc. Mô hình này không phân biệt chữ hoa và chữ thường</p>
+                            <p><strong>BERT:</strong> Một họ các mô hình sử dụng kiến trúc transformer, chỉ sử dụng encoder để hiểu văn bản. Trong quá trình thực hiện, nhóm đã sử dụng thử ba loại mô hình thuộc họ này: BERT, DistilBERT, và TinyBERT</p>
                         </li>
                     </ul>
                 </div>
 
+                <div>
+                    <h4 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span className="w-1.5 h-6 bg-blue-400 rounded-full"></span>
+                        Các phương pháp được áp dụng trong quá trình thực hiện
+                    </h4>
+                    <ul className="space-y-3 text-slate-700 ml-3">
+                        <li className="flex items-start gap-2">
+                            <span className="text-slate-400 mt-0.5">✔</span>
+                            <p><strong>Random Weighted Sampling:</strong> Gán mỗi mẫu một trọng số tương ứng sao cho nếu nhãn của mẫu càng ít, thì xác suất mẫu được chọn càng cao.</p>
+                        </li>
+                        <li className="flex items-start gap-2">
+                            <span className="text-slate-400 mt-0.5">✔</span>
+                            <p><strong>Cơ chế tối ưu Training:</strong> Nhóm xây dựng hàm huấn luyện tự động tích hợp <strong>Early Stopping</strong> để tránh Overfitting.</p>
+                        </li>
+                        <li className="flex items-start gap-2">
+                            <span className="text-slate-400 mt-0.5">✔</span>
+                            <p><strong>Quantization:</strong> Các mô hình sau khi được huấn luyện xong sẽ được quantized, trong đó các trọng số sẽ được chuyển sang dạng lưu trữ ít tốn bộ nhớ hơn nhằm giảm kích thước mô hình</p>
+                        </li>
+                    </ul>
+                </div>
 
                 {/* Mục 2: Đánh giá & Tối ưu (Tương tự phần Thiết lập đánh giá & Config Robust của PDF) */}
                 <div>
                     <h4 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
                         <span className="w-1.5 h-6 bg-green-400 rounded-full"></span>
-                        Thiết lập Đánh giá & Tối ưu
+                        Thiết lập Đánh giá
                     </h4>
                     <ul className="space-y-3 text-slate-700 ml-3">
                         <li className="flex items-start gap-2">
                             <span className="text-slate-400 mt-0.5">✔</span>
-                            <p><strong>Thiết lập đánh giá:</strong> Xây dựng confusion matrix để đánh giá mô hình, theo dõi các chỉ số như accuracy hay F1 để đánh giá chất lượng một cách đầy đủ nhất.</p>
+                            <p>So sánh các chỉ số như Precision, Recall, F1.</p>
                         </li>
                         <li className="flex items-start gap-2">
                             <span className="text-slate-400 mt-0.5">✔</span>
-                            <p><strong>Cơ chế tối ưu Training:</strong> Nhóm xây dựng hàm huấn luyện tự động tích hợp <strong>Early Stopping</strong> để tránh Overfitting.</p>
+                            <p>So sánh kích thước mô hình, thời gian huấn luyện, thời gian xử lý input, .</p>
                         </li>
                     </ul>
                 </div>

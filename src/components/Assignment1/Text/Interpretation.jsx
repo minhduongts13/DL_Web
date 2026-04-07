@@ -1,50 +1,120 @@
 import React from "react";
-import confusion_matrix_lstm from '../../../assets/Assignment1/text/confusion_matrix_lstm.png'
-import confusion_matrix_distillbert from '../../../assets/Assignment1/text/confusion_matrix_distillbert.png'
-import classification_report_lstm from '../../../assets/Assignment1/text/classification_report_lstm.png'
-import classification_report_distillbert from '../../../assets/Assignment1/text/classification_report_distillbert.png'
+import precison_models from '../../../assets/Assignment1/text/precision_across_models.png'
+import recall_models from '../../../assets/Assignment1/text/recall_across_models.png'
+import f1_models from '../../../assets/Assignment1/text/f1_across_models.png'
 
-const modelResults = [
-    {
-        name: "ResNet50 S3 (RandAug, LLRD)",
-        accuracy: 94.63,
-        f1: 94.64,
-        noisyAccuracy: 86.6,
-        drop: 8.03,
-        accent: "bg-sky-500",
-        badge: "Tốt nhất",
-        badgeClass: "bg-emerald-100 text-emerald-700 border-emerald-200",
-    },
-    {
-        name: "ViT-Base S2 (RandAug)",
-        accuracy: 94.47,
-        f1: 94.45,
-        noisyAccuracy: 84.73,
-        drop: 9.73,
-        accent: "bg-fuchsia-500",
-        badge: "Bám sát",
-        badgeClass: "bg-fuchsia-100 text-fuchsia-700 border-fuchsia-200",
-    },
-];
+import lstm_precison_balance from '../../../assets/Assignment1/text/precision_lstm_balanced.png'
+import lstm_recall_balance from '../../../assets/Assignment1/text/recall_lstm_balanced.png'
+import bert_precison_balance from '../../../assets/Assignment1/text/precision_bert_balanced.png'
+import bert_recall_balance from '../../../assets/Assignment1/text/recall_bert_balanced.png'
+import bert_precison_quantized from '../../../assets/Assignment1/text/precision_bert_quantized.png'
+import bert_recall_quantized from '../../../assets/Assignment1/text/recall_bert_quantized.png'
+
+
 
 const comments = [
     {
         title: "Nhận xét tổng quan",
-        content: "Cả hai mô hình đều có độ chính xác rất tốt (> 90%), giá trị F1 ứng với hầu hết các lớp ở cả hai mô hình đều cho kết quả tốt.",
+        content: "Các mô hình đều cho kết quả tốt, song sự mất cân bằng dữ liệu vẫn thể hiện thể hiện rõ tác động kể cả khi đã bổ sung thêm phương pháp nhằm hạn chế vấn đề này.",
     },
     {
-        title: "So sánh giữa hai mô hình",
-        content: "Xét trung bình, mô hình DistillBERT đạt kết quả có phần nhỉnh hơn so với mô hình LSTM, song không đáng kể. Điều này có thể vì tập dữ liệu kiểm thử còn hạn chế",
+        title: "Tác dụng phụ của Random Weight Sampling",
+        content: "Việc sử dụng Random Weight Sampling hoặc chỉ giúp cải thiện kết quả lên không đáng kể, hoặc gây ra hiện tượng mô hình thường đưa ra các dự đoán thiên về lớp thiểu số.",
     },
     {
-        title: "Tác động của sự mất cân bằng dữ liệu",
-        content: "Các đoạn văn bản có tính 'ngạc nhiên' chiếm thành phần ít nhất trong tập huấn luyện và tập kiểm thử, và kết quả phân loại cũng đồng thời cho thấy cả hai mô hình đều đạt kết quả kém hơn đối với cảm xúc này",
+        title: "Quantization",
+        content: "Quá trình quantization có hiệu quả cao, vừa giúp giảm kích thước mô hình đáng kể (đặc biệt là các mô hình phức tạp), nhưng vẫn giữ được performance tương đối ổn",
     },
     {
-        title: "Hướng cải thiện",
-        content: "Giải quyết tình trạng mất cân bằng dữ liệu, bổ sung augmentation, quantization, kết hợp mô hình, ...",
+        title: "Đánh giá chi tiết",
+        content: "Mô hình LSTM cho kết quả tương đối tốt, song bị ảnh hưởng nhiều bởi mất cân bằng dữ liệu. Trong khi đó, xét ở họ BERT, mạng BERT tuy tốt, song không hiệu quả; mạng TinyBERT có độ chính xác nhỏ, song huấn luyện nhanh; còn mạng DistilBERT nằm giữa hai mạng này.",
     },
+
 ];
+
+
+function Models() {
+  const data = [
+    { name: "LSTM", training_time: 974, epochs: 17, average_epoch_time: 57.3, inference_time: 0.722, accuarcy: 0.911, FLOPs: 6144, size: 39.4 },
+    { name: "BERT", training_time: 4501.3, epochs: 13, average_epoch_time: 346.3, inference_time: 8.630, accuarcy: 0.923, FLOPs: 5612617728, size: 417 },
+    { name: "DistilBERT", training_time: 1291.3, epochs: 6, average_epoch_time: 215.2, inference_time: 1.971, accuarcy: 0.927, FLOPs: 2806732800, size: 255 },
+    { name: "TinyBERT", training_time: 435.3, epochs: 32, average_epoch_time: 13.6, inference_time: 2.141, accuarcy: 0.899, FLOPs: 26180608, size: 16 },
+];
+
+  return (
+    <div className="p-1">
+      <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="text-center px-4 py-2 border-b">Mô hình</th>
+            <th className="text-center px-4 py-2 border-b">Thời gian huấn luyện (s)</th>
+            <th className="text-center px-4 py-2 border-b">Số epochs</th>
+            <th className="text-center px-4 py-2 border-b">Thời gian trung bình một epoch (s)</th>
+            <th className="text-center px-4 py-2 border-b">Thời gian trung bình xử lý một request (ms)</th>
+            <th className="text-center px-4 py-2 border-b">Độ chính xác</th>
+            <th className="text-center px-4 py-2 border-b">FLOPs</th>
+            <th className="text-center px-4 py-2 border-b">Kích thước mô hình (MB)</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {data.map((item) => (
+            <tr key={item.id} className="hover:bg-gray-50">
+              <td className="px-4 py-2 border-b">{item.name}</td>
+              <td className="px-4 py-2 border-b">{item.training_time.toFixed(1)}</td>
+              <td className="px-4 py-2 border-b">{item.epochs}</td>
+              <td className="px-4 py-2 border-b">{item.average_epoch_time.toFixed(2)}</td>
+              <td className="px-4 py-2 border-b">{item.inference_time.toFixed(3)}</td>
+              <td className="px-4 py-2 border-b">{item.accuarcy.toFixed(3)}</td>
+              <td className="px-4 py-2 border-b">{item.FLOPs.toLocaleString()}</td>
+              <td className="px-4 py-2 border-b">{item.size.toFixed(0)}</td>
+
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+
+function Quantization() {
+  const data = [
+    { name: "BERT", original: 417, quantized: 173, original_time: 65.1, quantized_time: 62.3 },
+    { name: "DistilBERT", original: 255, quantized: 132, original_time: 37.0, quantized_time: 31.0 },
+    { name: "TinyBERT", original: 16, quantized: 15.5, original_time: 2.1, quantized_time: 2.3 },
+];
+
+  return (
+    <div className="p-1">
+      <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="text-center px-4 py-2 border-b">Mô hình</th>
+            <th className="text-center px-4 py-2 border-b">Kích thước ban đầu (MB)</th>
+            <th className="text-center px-4 py-2 border-b">Kích thước sau quantized (MB)</th>
+            <th className="text-center px-4 py-2 border-b">Thời gian xử lý trung bình ban đầu (ms)</th>
+            <th className="text-center px-4 py-2 border-b">Thời gian xử lý trung bình sau quantized (ms)</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {data.map((item) => (
+            <tr key={item.id} className="hover:bg-gray-50">
+              <td className="px-4 py-2 border-b">{item.name}</td>
+              <td className="px-4 py-2 border-b">{item.original}</td>
+              <td className="px-4 py-2 border-b">{item.quantized.toFixed(1)}</td>
+              <td className="px-4 py-2 border-b">{item.original_time.toFixed(1)}</td>
+              <td className="px-4 py-2 border-b">{item.quantized_time.toFixed(1)}</td>
+
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 
 export default function Interpretation() {
     return (
@@ -65,62 +135,134 @@ export default function Interpretation() {
 
             <div className="space-y-10">
                 
-                <div>Chú giải: 0 - Buồn bã, 1 - Hạnh phúc, 2 - Yêu quý, 3 - Tức giận, 4 - Sợ hãi, 5 - Ngạc nhiên</div>
+                <div>{Models()}</div>
+
+                <div>Các kết quả về thời gian huấn luyện, xử lý và kích thước mô hình</div>
 
                 {/* PHẦN 1: KẾT QUẢ THỰC NGHIỆM */}
                 <div className="grid grid-cols-2 gap-4">
 
                     <div className="flex flex-col items-center w-full">
-                        <div className="mb-10 space-y-6">
-                            <p className="text-slate-700 leading-relaxed text-lg max-w-4xl">
-                                <strong>LSTM</strong>
-                            </p>
-
-                        </div>
 
                         {/* Ảnh được thiết lập w-full để phóng to tối đa */}
-                        <img 
-                            src={confusion_matrix_lstm} 
-                            alt="Confusion Matrix của mạng LSTM" 
-                            className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
-                        />
-                        <div className="m-4">Confusion Matrix</div>
 
                         <img 
-                            src={classification_report_lstm} 
-                            alt="Kết quả phân loại của mạng LSTM" 
+                            src={precison_models} 
+                            alt="Precision của các mô hình" 
                             className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
                         />
-                        <div className="m-4">Các chỉ số phân loại của LSTM</div>
+                        <div className="m-4">Precision của các mô hình</div>
 
                     </div>
 
                     <div className="flex flex-col items-center w-full">
-                        <div className="mb-10 space-y-6">
-                            <p className="text-slate-700 leading-relaxed text-lg max-w-4xl">
-                                <strong>DistilBERT</strong>
-                            </p>
-
-                        </div>
-
                         {/* Ảnh được thiết lập w-full để phóng to tối đa */}
                         <img 
-                            src={confusion_matrix_distillbert} 
-                            alt="Confusion Matrix của mạng DistillBERT" 
+                            src={recall_models} 
+                            alt="Recall của các mô hình" 
                             className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
                         />
-                        <div className="m-4">Confusion Matrix</div>
-
-                        <img 
-                            src={classification_report_distillbert} 
-                            alt="Kết quả phân loại của mạng DistillBERT" 
-                            className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
-                        />
-                        <div className="m-4">Các chỉ số phân loại của DistillBERT</div>
+                        <div className="m-4">Recall của các mô hình</div>
 
                     </div>
                     
                 </div>
+
+                <div>
+                    <img 
+                        src={f1_models} 
+                        alt="Recall của các mô hình" 
+                        className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
+                    />
+                    <div className="m-4">F1 của các mô hình</div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+
+                    <div className="flex flex-col items-center w-full">
+
+                        {/* Ảnh được thiết lập w-full để phóng to tối đa */}
+
+                        <img 
+                            src={lstm_precison_balance} 
+                            alt="So sánh Precision của mạng LSTM giữa dùng và không dùng Weighted Random Sampler" 
+                            className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
+                        />
+                        <div className="m-4">So sánh Precision của mạng LSTM giữa dùng và không dùng Weighted Random Sampler</div>
+
+                    </div>
+
+                    <div className="flex flex-col items-center w-full">
+                        {/* Ảnh được thiết lập w-full để phóng to tối đa */}
+                        <img 
+                            src={lstm_recall_balance} 
+                            alt="So sánh Recall của mạng LSTM giữa dùng và không dùng Weighted Random Sampler" 
+                            className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
+                        />
+                        <div className="m-4">So sánh Recall của mạng LSTM giữa dùng và không dùng Weighted Random Sampler</div>
+
+                    </div>
+                    
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+
+                    <div className="flex flex-col items-center w-full">
+
+                        {/* Ảnh được thiết lập w-full để phóng to tối đa */}
+
+                        <img 
+                            src={bert_precison_balance} 
+                            alt="So sánh Precision của mạng BERT giữa dùng và không dùng Weighted Random Sampler" 
+                            className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
+                        />
+                        <div className="m-4">So sánh Precision của mạng BERT giữa dùng và không dùng Weighted Random Sampler</div>
+
+                    </div>
+
+                    <div className="flex flex-col items-center w-full">
+                        {/* Ảnh được thiết lập w-full để phóng to tối đa */}
+                        <img 
+                            src={bert_recall_balance} 
+                            alt="So sánh Recall của mạng BERT giữa dùng và không dùng Weighted Random Sampler" 
+                            className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
+                        />
+                        <div className="m-4">So sánh Recall của mạng BERT giữa dùng và không dùng Weighted Random Sampler</div>
+
+                    </div>
+                    
+                </div>
+
+                <div>{Quantization()}</div>
+
+                <div className="grid grid-cols-2 gap-4">
+
+                    <div className="flex flex-col items-center w-full">
+
+                        {/* Ảnh được thiết lập w-full để phóng to tối đa */}
+
+                        <img 
+                            src={bert_precison_quantized} 
+                            alt="So sánh Precision của mạng BERT thường và mạng BERT được quantized" 
+                            className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
+                        />
+                        <div className="m-4">So sánh Precision của mạng BERT thường và mạng BERT được quantized</div>
+
+                    </div>
+
+                    <div className="flex flex-col items-center w-full">
+                        {/* Ảnh được thiết lập w-full để phóng to tối đa */}
+                        <img 
+                            src={bert_recall_quantized} 
+                            alt="So sánh Recall của mạng BERT thường và mạng BERT được quantized" 
+                            className="w-full max-w-4xl mx-auto h-auto object-contain rounded-xl"
+                        />
+                        <div className="m-4">So sánh Recall của mạng BERT thường và mạng BERT được quantized</div>
+
+                    </div>
+                    
+                </div>
+
 
                 {/* PHẦN 2: NHẬN XÉT CHI TIẾT */}
                 <div>
