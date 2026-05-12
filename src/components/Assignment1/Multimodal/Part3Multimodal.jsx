@@ -10,7 +10,7 @@ const Part3Multimodal = () => {
         <section id="part3" className="scroll-mt-8">
             <div className="border-b-2 border-slate-200 pb-4 mb-8">
                 <h2 className="text-3xl font-extrabold text-slate-800">Phần 3: Dữ liệu Đa phương thức (Multimodal)</h2>
-                <p className="text-slate-500 mt-2">Đánh giá mô hình kết hợp Ảnh & Văn bản với CLIP: Zero-shot và Few-shot learning</p>
+                <p className="text-slate-500 mt-2">Fashion20k/Fashion200k subset: phân loại ảnh + caption bằng CLIP zero-shot và few-shot learning</p>
             </div>
 
             <Overview />

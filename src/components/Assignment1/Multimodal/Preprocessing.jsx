@@ -1,13 +1,12 @@
 import React from 'react';
-import splitDistribution from './report/3.3.png';
-import captionBeforeAfter from './report/3.4.png';
+import splitDistribution from './report/3.2.png';
 
 const steps = [
-    '3.1 Loại bỏ caption rỗng và giữ lại bản gốc trong cột caption_raw.',
-    '3.2 Mã hóa nhãn lớp để chuẩn bị cho chia tập và huấn luyện.',
-    '3.3 Chia Train / Validation / Test theo chiến lược stratified split.',
-    '3.4 Làm sạch caption bằng cách loại câu nhiễu, thêm từ khóa accessory vào danh sách lọc.',
-    '3.5 Chuẩn hóa ảnh để phù hợp với pipeline CLIP.',
+    '3.1 Mã hóa label_id cho 5 lớp: dresses, jackets, pants, skirts và tops.',
+    '3.2 Chia dữ liệu stratified theo tỷ lệ 70% train, 15% validation và 15% test.',
+    '3.3 Tạo clean_text từ caption gốc để dùng ổn định cho text encoder.',
+    '3.4 Giữ ảnh ở dạng PIL image; CLIPProcessor xử lý resize, center crop, normalize và tokenization theo batch.',
+    '3.5 Tạo DatasetDict gồm train 14,000 mẫu, validation 3,000 mẫu và test 3,000 mẫu.',
 ];
 
 const Preprocessing = () => {
@@ -22,8 +21,8 @@ const Preprocessing = () => {
                 </h3>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
-                <div className="xl:col-span-2 rounded-2xl bg-slate-50 p-6 border border-slate-100 shadow-inner">
+            <div className="mb-8">
+                <div className="rounded-2xl bg-slate-50 p-6 border border-slate-100 shadow-inner">
                     <h4 className="text-lg font-bold text-slate-800 mb-4">Pipeline chính của notebook</h4>
                     <ul className="space-y-3 text-slate-700 leading-relaxed">
                         {steps.map((step) => (
@@ -34,24 +33,12 @@ const Preprocessing = () => {
                         ))}
                     </ul>
                 </div>
-
-                <div className="rounded-2xl border border-indigo-100 bg-indigo-50/40 p-5">
-                    <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-3">Key insight</div>
-                    <p className="text-sm text-slate-700 leading-relaxed">
-                        Caption sau tiền xử lý ngắn hơn, gọn hơn và giảm các mô tả phụ trợ. Điều này giúp mô hình học mối liên kết image-text ổn định hơn khi dùng CLIP cho zero-shot và few-shot.
-                    </p>
-                </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6">
                 <figure className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                    <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">3.3 Train / Val / Test Label Distribution</figcaption>
+                    <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">3.2 Train / Val / Test Label Distribution</figcaption>
                     <img src={splitDistribution} alt="Label distribution after stratified split" className="w-full rounded-xl" />
-                </figure>
-
-                <figure className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                    <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">3.4 Caption Length Before vs After</figcaption>
-                    <img src={captionBeforeAfter} alt="Caption length before and after preprocessing" className="w-full rounded-xl" />
                 </figure>
             </div>
         </div>

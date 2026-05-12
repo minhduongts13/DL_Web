@@ -1,12 +1,13 @@
 import React from 'react';
-import classDistribution from './report/2.2.png';
-import captionLength from './report/2.4.png';
-import sampleGrid from './report/2.5.png';
+import classDistribution from './report/2.3.png';
+import imageSizeDistribution from './report/2.4.png';
+import captionLengthDistribution from './report/2.5.png';
+import sampleGrid from './report/2.6.png';
 
 const mismatchStats = [
-    { label: 'Missing text', value: '7', note: 'Các bản ghi có ảnh nhưng thiếu mô tả.' },
-    { label: 'Text missing image', value: '7', note: 'Có caption nhưng không tìm thấy file ảnh tương ứng.' },
-    { label: 'Image missing text', value: '1,552', note: 'Nhiều ảnh không có text annotation đi kèm.' },
+    { label: 'Tổng mẫu', value: '20,000', note: 'Tất cả bản ghi đều có ảnh, nhãn category1, caption và item_ID.' },
+    { label: 'Valid image + text', value: '100%', note: 'Notebook không phát hiện missing, empty string hoặc unreadable image.' },
+    { label: 'Imbalance ratio', value: '2.18x', note: 'Lớp nhiều nhất là dresses, lớp ít nhất là jackets.' },
 ];
 
 const Overview = () => {
@@ -24,10 +25,10 @@ const Overview = () => {
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
                 <div className="xl:col-span-2 space-y-4">
                     <p className="text-slate-700 leading-relaxed text-lg">
-                        Dự án Multimodal sử dụng dữ liệu thời trang có cả <strong className="font-bold text-fuchsia-600">ảnh</strong> và <strong className="font-bold text-fuchsia-600">mô tả văn bản</strong>. Mục tiêu là kiểm tra mức độ tương thích giữa hai modality và đánh giá hiệu quả khi chỉ dùng mô tả, chỉ dùng ảnh hoặc kết hợp cả hai.
+                        Phần Multimodal sử dụng <strong className="font-bold text-fuchsia-600">Fashion20k</strong>, một subset từ Fashion200k, gồm ảnh sản phẩm thời trang và mô tả văn bản đi kèm. Bài toán chính là phân loại <strong className="font-bold text-fuchsia-600">loại trang phục</strong> bằng các mô hình CLIP.
                     </p>
                     <p className="text-slate-600 leading-relaxed">
-                        Theo notebook, phần EDA tập trung vào 3 vấn đề chính: dữ liệu bị lệch giữa text và image, phân bố lớp từ caption, và độ dài caption trước khi đưa vào pipeline CLIP.
+                        Phần EDA trong notebook đi theo thứ tự: kiểm tra schema và missing values, xem phân bố lớp, khảo sát kích thước ảnh, phân tích độ dài caption, rồi trực quan hóa các cặp ảnh-caption đại diện.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
@@ -43,29 +44,34 @@ const Overview = () => {
 
                 <div className="rounded-2xl border border-fuchsia-100 bg-fuchsia-50/40 p-5 flex flex-col justify-center">
                     <div className="text-center space-y-3">
-                        <div className="text-5xl font-extrabold text-fuchsia-600 leading-none">6</div>
-                        <div className="text-xs font-bold text-slate-600 uppercase tracking-wider">classes thời trang</div>
+                        <div className="text-5xl font-extrabold text-fuchsia-600 leading-none">5</div>
+                        <div className="text-xs font-bold text-slate-600 uppercase tracking-wider">classes trang phục</div>
                     </div>
                     <p className="text-sm text-slate-600 text-center leading-relaxed mt-4">
-                        Bộ dữ liệu gồm 6 nhãn: <strong>Tees, Fullbody, Outerwear, Top_Shirts, Short_Bottom</strong> và <strong>Long_Bottom</strong>. Từ đây, notebook tiếp tục kiểm tra class imbalance và chất lượng caption.
+                        Bộ dữ liệu gồm 5 nhãn: <strong>dresses, jackets, pants, skirts</strong> và <strong>tops</strong>. Dresses chiếm nhiều nhất với 5,861 mẫu, jackets ít nhất với 2,691 mẫu.
                     </p>
                 </div>
             </div>
 
+            <figure className="mb-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">2.3 Class Distribution</figcaption>
+                <img src={classDistribution} alt="Class distribution for category1" className="w-full rounded-xl" />
+            </figure>
+
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <figure className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                    <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">2.2 Class Distribution</figcaption>
-                    <img src={classDistribution} alt="Class distribution from text annotations" className="w-full rounded-xl" />
+                    <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">2.4 Image Size Distribution</figcaption>
+                    <img src={imageSizeDistribution} alt="Width and height distribution" className="w-full rounded-xl" />
                 </figure>
 
                 <figure className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                    <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">2.4 Caption Length Distribution</figcaption>
-                    <img src={captionLength} alt="Caption length distribution" className="w-full rounded-xl" />
+                    <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">2.5 Caption Length Analysis</figcaption>
+                    <img src={captionLengthDistribution} alt="Caption length distribution by word count" className="w-full rounded-xl" />
                 </figure>
             </div>
 
             <figure className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">2.5 Sample Visualization</figcaption>
+                <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">2.6 Sample Visualization</figcaption>
                 <img src={sampleGrid} alt="Sample multimodal visualization grid" className="w-full rounded-xl" />
             </figure>
         </div>

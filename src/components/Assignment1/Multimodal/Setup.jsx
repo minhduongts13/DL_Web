@@ -1,13 +1,25 @@
 import React from 'react';
 
 const chips = [
-    'CLIP backbone',
+    'OpenAI CLIP ViT-B/32',
+    'FashionCLIP 2.0',
     'Zero-shot baseline',
-    'Few-shot linear probe',
-    'Image / Text / Fusion features',
-    'k = 1, 4, 8, 16 shots',
-    '5 independent runs',
-    'Selection by F1-macro',
+    'Few-shot MLP classifier',
+    'Image + text features',
+    'k = 8, 16, 32, 64 shots',
+    'MLP',
+    'Metric: macro-F1',
+];
+
+const experimentRows = [
+    ['Backbone', 'OpenAI CLIP ViT-B/32; FashionCLIP 2.0'],
+    ['Zero-shot prompts', 'So sánh class prompt và clothing-specific prompt'],
+    ['Class prompt', '"a photo of a {label}"'],
+    ['Clothing-specific prompt', '"a photo of a clothing item: {label}"'],
+    ['Classifier', 'MLP classifier trên feature image + text'],
+    ['k-shot setting', '8, 16, 32, 64 mẫu mỗi lớp'],
+    ['Test', '3,000 mẫu'],
+    ['Metrics', 'Macro-F1 và weighted-F1'],
 ];
 
 const Setup = () => {
@@ -25,10 +37,10 @@ const Setup = () => {
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
                 <div className="xl:col-span-2 space-y-5">
                     <p className="text-slate-700 leading-relaxed text-lg">
-                        Notebook sử dụng <strong className="font-bold text-emerald-600">CLIP</strong> như một backbone đa phương thức để so sánh khả năng <strong>zero-shot</strong> và <strong>few-shot</strong>. Từ cùng một tập dữ liệu, pipeline lần lượt tách đặc trưng ảnh, đặc trưng text và đặc trưng fusion để kiểm tra độ lợi từ từng modality.
+                        Notebook so sánh hai backbone <strong className="font-bold text-emerald-600">OpenAI CLIP ViT-B/32</strong> và <strong className="font-bold text-emerald-600">FashionCLIP 2.0</strong>. Zero-shot dùng prompt theo tên lớp, còn few-shot trích xuất đặc trưng ảnh + text rồi huấn luyện MLP classifier.
                     </p>
                     <p className="text-slate-600 leading-relaxed">
-                        Các thí nghiệm được chọn theo <strong className="font-semibold text-emerald-600">F1-macro</strong> trên validation, sau đó retest trên test set để giữ cùng một tiêu chí đánh giá giữa zero-shot và few-shot.
+                        Few-shot support set lấy k mẫu mỗi lớp với k = 8, 16, 32 và 64. Tất cả kết quả được báo cáo trên test split 3,000 mẫu bằng <strong className="font-semibold text-emerald-600">macro-F1</strong> và weighted-F1.
                     </p>
 
                     <div className="flex flex-wrap gap-3">
@@ -39,19 +51,23 @@ const Setup = () => {
                         ))}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                            <h4 className="font-bold text-slate-800 mb-2">Zero-shot</h4>
-                            <p className="text-sm text-slate-600 leading-relaxed">Dùng chính embedding CLIP và prompt captions để thiết lập mốc tham chiếu ban đầu.</p>
-                        </div>
-                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                            <h4 className="font-bold text-slate-800 mb-2">Few-shot image</h4>
-                            <p className="text-sm text-slate-600 leading-relaxed">Huấn luyện tuyến tính trên đặc trưng ảnh khi chỉ có vài mẫu mỗi lớp.</p>
-                        </div>
-                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                            <h4 className="font-bold text-slate-800 mb-2">Few-shot fusion</h4>
-                            <p className="text-sm text-slate-600 leading-relaxed">Kết hợp ảnh và text để kiểm tra xem modality nào bổ sung thông tin tốt hơn.</p>
-                        </div>
+                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                        <table className="w-full text-left text-sm">
+                            <thead className="bg-emerald-50 text-slate-700">
+                                <tr>
+                                    <th className="px-4 py-3 font-bold">Hạng mục</th>
+                                    <th className="px-4 py-3 font-bold">Thiết lập trong notebook</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                                {experimentRows.map(([label, value]) => (
+                                    <tr key={label} className="bg-white even:bg-slate-50/70">
+                                        <td className="px-4 py-3 font-semibold text-slate-800 align-top whitespace-nowrap">{label}</td>
+                                        <td className="px-4 py-3 text-slate-600 leading-relaxed">{value}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -61,7 +77,7 @@ const Setup = () => {
                         <div className="text-xs font-bold uppercase tracking-wider text-slate-600 mt-2">Vision-Language Backbone</div>
                     </div>
                     <p className="text-sm text-slate-600 text-center leading-relaxed mt-4">
-                        Cấu hình trong notebook tập trung vào hai model CLIP phổ biến, cache feature trên RAM và huấn luyện few-shot nhiều lần để giảm nhiễu của split ngẫu nhiên.
+                        FashionCLIP 2.0 phù hợp miền thời trang hơn OpenAI CLIP trong cả zero-shot lẫn few-shot, đặc biệt khi tăng k-shot.
                     </p>
                 </div>
             </div>

@@ -1,11 +1,18 @@
 import React from 'react';
-import misclassifiedOne from './report/8_1.png';
-import misclassifiedTwo from './report/8_2.png';
+import confusionMatrix from './report/6.2.png';
+import misclassifiedSamples from './report/6.3.png';
 
 const insights = [
-    'Các lỗi sai thường xảy ra khi ảnh chứa nhiều lớp trang phục chồng lấn, khiến mô hình bám vào chi tiết phụ thay vì đối tượng chính.',
-    'Caption token importance cho thấy các từ như fabric, pattern, wears, sleeves xuất hiện dày đặc nhưng không phải lúc nào cũng đủ để phân biệt đúng lớp.',
-    'Các cặp nhầm lẫn nổi bật thường xoay quanh nhóm upper-body và lower-body tương tự nhau, ví dụ Top_Shirts, Tees, Short_Bottom, Outerwear.',
+    'Best few-shot model là FashionCLIP 2.0 image+text MLP với k = 64; còn 161 lỗi trên 3,000 mẫu test.',
+    'Cặp nhầm nhiều nhất là dresses -> tops với 51 mẫu, sau đó skirts -> dresses với 24 mẫu và tops -> dresses với 19 mẫu.',
+    'Các hard cases thường có caption mô tả chất liệu/kiểu dáng nhập nhằng, ví dụ vest bị dự đoán thành tops hoặc skirt có mô tả giống dress.',
+];
+
+const confusionInsights = [
+    'Các giá trị trên đường chéo chiếm đa số ở cả 5 lớp, cho thấy mô hình phân loại ổn định sau khi kết hợp image embedding và text embedding.',
+    'Lớp pants dễ nhận diện nhất với 465/471 mẫu đúng, chỉ có rất ít nhầm lẫn sang các lớp còn lại.',
+    'Nhầm lẫn lớn nhất là dresses -> tops với 51 mẫu; đây cũng là nguyên nhân chính làm recall của dresses thấp hơn các lớp khác.',
+    'Nhóm skirts bị nhầm sang dresses 24 mẫu, phản ánh sự tương đồng hình dáng giữa váy liền và chân váy trong một số ảnh/caption.',
 ];
 
 const ErrorAnalysis = () => {
@@ -20,21 +27,32 @@ const ErrorAnalysis = () => {
                 </h3>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
-                <div className="xl:col-span-2 space-y-6">
+            <div className="space-y-6 mb-8">
+                <div className="space-y-6">
                     <figure className="rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
-                        <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">Misclassified samples with attention overlay</figcaption>
-                        <img src={misclassifiedOne} alt="Misclassified samples with attention overlay" className="w-full rounded-xl" />
+                        <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">6.2 Best Model Confusion Matrix</figcaption>
+                        <img src={confusionMatrix} alt="Best few-shot FashionCLIP confusion matrix" className="w-full rounded-xl" />
                     </figure>
 
+                    <div className="rounded-2xl border border-sky-100 bg-sky-50/60 p-5 shadow-sm">
+                        <h4 className="text-lg font-bold text-slate-800 mb-4">Nhận xét confusion matrix</h4>
+                        <div className="space-y-3">
+                            {confusionInsights.map((item) => (
+                                <div key={item} className="rounded-xl border border-sky-100 bg-white p-4">
+                                    <p className="text-sm text-slate-700 leading-relaxed">{item}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     <figure className="rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
-                        <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">Additional misclassified samples</figcaption>
-                        <img src={misclassifiedTwo} alt="Additional misclassified samples with attention overlay" className="w-full rounded-xl" />
+                        <figcaption className="mb-3 text-center text-lg font-bold text-slate-800">6.3 Misclassified Samples</figcaption>
+                        <img src={misclassifiedSamples} alt="Misclassified samples from the best few-shot model" className="w-full rounded-xl" />
                     </figure>
                 </div>
 
                 <div className="rounded-2xl border border-rose-100 bg-rose-50/60 p-5 shadow-sm">
-                    <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-3">Notebook takeaways</div>
+                    <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-3">Nhận xét:</div>
                     <div className="space-y-3">
                         {insights.map((item) => (
                             <div key={item} className="rounded-xl border border-rose-100 bg-white p-4">
@@ -46,7 +64,7 @@ const ErrorAnalysis = () => {
                     <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
                         <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Reading the figure</div>
                         <p className="text-sm text-slate-700 leading-relaxed">
-                            Phần attention map giúp giải thích vì sao model chọn sai: vùng nổi bật đôi khi nằm ở chi tiết trang phục phụ, trong khi token caption lại thiên về mô tả ngữ cảnh. Đây là lý do các mẫu khó vẫn cần few-shot fusion để cải thiện.
+                            Bảng lỗi cho thấy nhầm lẫn chủ yếu xảy ra giữa các nhóm có tín hiệu thị giác hoặc ngôn ngữ gần nhau. Notebook dùng các hard cases này để giải thích vì sao thêm feature ảnh + text giúp tăng mạnh macro-F1 so với zero-shot prompt đơn thuần.
                         </p>
                     </div>
                 </div>
